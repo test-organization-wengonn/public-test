@@ -5,7 +5,7 @@ on: pull_request # run on pull request events
 permissions:
  pull-requests: write # grant write permission on the pull-requests endpoint
 jobs:
- approve:
+ approve-6:
    runs-on: ubuntu-latest
  
    steps:
